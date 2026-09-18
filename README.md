@@ -59,8 +59,8 @@ required; add `monitor` if you want its window moved:
 ```json
 {
   "applications": [
-    { "name": "MOZA Pit House", "path": "C:\\Program Files (x86)\\MOZA Pit House\\MOZA Pit House.exe", "monitor": 4 },
-    { "name": "Crew Chief",     "path": "C:\\Program Files (x86)\\Britton IT Ltd\\CrewChiefV4\\CrewChiefV4.exe", "monitor": 4 }
+    { "name": "MOZA Pit House", "path": "C:\\Program Files (x86)\\MOZA Pit House\\MOZA Pit House.exe", "monitor": 3 },
+    { "name": "Crew Chief",     "path": "C:\\Program Files (x86)\\Britton IT Ltd\\CrewChiefV4\\CrewChiefV4.exe", "monitor": 3 }
   ]
 }
 ```
@@ -134,7 +134,8 @@ Every problem is reported by app name; these are the ones you are most likely to
 | `failed to start: …` | Windows refused to start it (e.g. you cancelled a UAC prompt). The other apps still launch. |
 | `no window appeared within 30 seconds` | It is still loading, crashed silently, or starts minimized to the tray. If it is a tray app, remove its `monitor` field so the launcher does not wait for a window. |
 | `the window that was positioned has closed and no new window appeared…` | The launcher positioned a splash screen and the real window took longer than the settle time to appear. Run with `-SettleSeconds 20` (or more); if the app has several windows, set `windowTitle`. |
-| `monitor 4 is not connected …; using primary monitor 2 instead` | Turn the monitor on / plug it in, or change the number. |
+| `monitor 4 is not connected …; using primary monitor 2 instead` | That number is not in the list at the top of the output. Pick the number from the list (turn the monitor on first if it is one that is switched off). |
+| Lines like `Trace: …`, `ExtensionLoadWarning`, `{"name":"iracing-electron", …}` between the launcher's own lines | Not errors and not from the launcher: some applications (the iRacing UI, RaceLab) print their internal log into whatever console started them. The launcher tells them not to; if you still see such lines, they come from an app launched some other way. |
 | `could not move window …: Access is denied … running as Administrator` | Windows does not let a normal script touch the window of an app running as Administrator. Close that app and let the launcher start it normally (do **not** run the launcher as Administrator — every app it starts would be elevated too). MOZA Pit House ends up elevated after its own updater relaunches it. |
 | `did not close within 15 seconds; terminated forcefully` | The app ignored the close request (it minimizes to the tray on close, or showed a dialog). Harmless for these apps when idle — see below. |
 | `could not be closed, even forcefully` | Almost always an app running as Administrator; close it by hand (or run the closer as Administrator for that one time). |

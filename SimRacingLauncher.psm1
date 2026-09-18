@@ -576,6 +576,10 @@ function Start-LauncherApp {
         ErrorAction      = 'Stop'
     }
     if ($App.Arguments) { $startArgs.ArgumentList = $App.Arguments }   # Start-Process rejects an empty ArgumentList
+    # Electron applications (the iRacing UI, RaceLab) attach themselves to the console that started
+    # them and print their internal log into it (electron_main_win.cc calls RouteStdioToConsole
+    # unless this documented variable is set). Launched applications inherit it; nothing else sees it.
+    $env:ELECTRON_NO_ATTACH_CONSOLE = '1'
     try {
         Start-Process @startArgs
     }

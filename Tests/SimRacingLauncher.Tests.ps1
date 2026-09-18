@@ -125,7 +125,7 @@ Describe 'Get-LauncherConfig' {
         It 'loads the shipped apps.json' {
             $config = Get-LauncherConfig -Path (Join-Path $PSScriptRoot '..\apps.json')
             $config.Applications.Name | Should -Be @('MOZA Pit House', 'SimHub', 'RaceLab', 'iRacing UI')
-            $config.Applications.Monitor | Should -Be @(4, 4, 4, 4)
+            $config.Applications.Monitor | Should -Be @(3, 3, 3, 3)
         }
     }
 
@@ -307,6 +307,16 @@ Describe 'Start-LauncherApp' {
         Should -Invoke -ModuleName $script:ModuleName Start-Process -Times 1 -Exactly -ParameterFilter {
             $FilePath -eq 'C:\Apps\App.exe' -and $WorkingDirectory -eq 'C:\Apps' -and -not $PesterBoundParameters.ContainsKey('ArgumentList')
         }
+    }
+
+    It 'tells Electron applications not to attach to this console before launching' {
+        $saved = $env:ELECTRON_NO_ATTACH_CONSOLE
+        try {
+            Remove-Item Env:\ELECTRON_NO_ATTACH_CONSOLE -ErrorAction SilentlyContinue
+            $null = Start-LauncherApp -App (New-TestApp)
+            $env:ELECTRON_NO_ATTACH_CONSOLE | Should -Be '1'
+        }
+        finally { $env:ELECTRON_NO_ATTACH_CONSOLE = $saved }
     }
 
     It 'passes configured arguments' {
