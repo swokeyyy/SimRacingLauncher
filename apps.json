@@ -1,0 +1,27 @@
+{
+  "applications": [
+    {
+      "name": "MOZA Pit House",
+      "path": "C:\\Program Files (x86)\\MOZA Pit House\\MOZA Pit House.exe",
+      "monitor": 4
+    },
+    {
+      "name": "SimHub",
+      "path": "C:\\Program Files (x86)\\SimHub\\SimHubWPF.exe",
+      "exitArguments": "-exit",
+      "windowTitle": "SimHub*",
+      "monitor": 4
+    },
+    {
+      "name": "RaceLab",
+      "path": "%LOCALAPPDATA%\\racelabapps\\RacelabApps.exe",
+      "windowTitle": "Racelab*",
+      "monitor": 4
+    },
+    {
+      "name": "iRacing UI",
+      "path": "C:\\Program Files (x86)\\iRacing\\ui\\iRacingUI.exe",
+      "monitor": 4
+    }
+  ]
+}
